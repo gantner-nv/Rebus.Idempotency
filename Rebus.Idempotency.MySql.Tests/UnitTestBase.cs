@@ -10,7 +10,6 @@ namespace Rebus.Idempotency.MySql.Tests
 
         public UnitTestBase()
         {
-            RebusTimeMachine.Reset();
             _disposables.Clear();
         }
 

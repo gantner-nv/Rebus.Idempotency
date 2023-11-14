@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using Rebus.Extensions;
 using Rebus.Logging;
 using Rebus.Idempotency.MySql.Extensions;
-using System.Collections.Generic;
 
 namespace Rebus.Idempotency.MySql
 {
@@ -186,7 +185,7 @@ namespace Rebus.Idempotency.MySql
                         }
                     }
 
-                    if(!columns.Exists(x => x.columnName == "defer_count" && x.dataType == "tinyint")) 
+                    if(!columns.Exists(x => x.columnName == "defer_count" && x.dataType == "tinyint"))
                     {
                         throw new Exception("The defer_count column is required to be tinyint for this package version. " +
                             $"Please update the database schema for your idempotency table: {_dataTableName}.");
@@ -199,7 +198,7 @@ namespace Rebus.Idempotency.MySql
         {
             using (var connection = await _connectionHelper.GetConnection())
             {
-                var tableNames = connection.GetTableNames().ToHashSet();
+                var tableNames = new HashSet<string>(connection.GetTableNames());
 
                 var hasDataTable = tableNames.Contains(_dataTableName);
 

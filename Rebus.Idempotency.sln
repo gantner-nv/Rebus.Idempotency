@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rebus.Idempotency.MySql", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rebus.Idempotency.MySql.Tests", "Rebus.Idempotency.MySql.Tests\Rebus.Idempotency.MySql.Tests.csproj", "{61D72142-6367-48EF-AB89-5892B4474BC3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rebus.Idempotency", "Rebus.Idempotency", "{5F49E979-43E1-488F-8029-8E3683995E8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rebus.Idempotency.MySql", "Rebus.Idempotency.MySql", "{DACCE8D6-806B-437A-82B8-78168ED97AFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,5 +90,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3179CA2E-DB98-4BD9-A508-E407A7CE80AE} = {DACCE8D6-806B-437A-82B8-78168ED97AFC}
+		{61D72142-6367-48EF-AB89-5892B4474BC3} = {DACCE8D6-806B-437A-82B8-78168ED97AFC}
+		{E605FDA6-02AF-49D2-8209-0038155082A0} = {5F49E979-43E1-488F-8029-8E3683995E8A}
+		{CA7255A2-7351-4BD6-AD31-E4FD17EC1574} = {5F49E979-43E1-488F-8029-8E3683995E8A}
 	EndGlobalSection
 EndGlobal

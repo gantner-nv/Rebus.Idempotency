@@ -3,7 +3,7 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>9</LangVersion>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <NoWarn>SA1101;SA1200;SA1600;</NoWarn>
+        <CodeAnalysisRuleSet>../custom.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
 
     <ItemGroup>

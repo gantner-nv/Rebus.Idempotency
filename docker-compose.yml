@@ -1,0 +1,30 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+    command: dotnet test --configuration Release
+    depends_on:
+      mysql:
+        condition: service_started
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:cached
+    networks:
+      - fiber
+
+  mysql:
+    image: mysql:8.0.32
+    environment:
+      - MYSQL_DATABASE=rebus2_test
+      - MYSQL_USER=mysql
+      - MYSQL_PASSWORD=mysql
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 3306:3306
+    networks:
+      - fiber
+
+networks:
+  fiber:

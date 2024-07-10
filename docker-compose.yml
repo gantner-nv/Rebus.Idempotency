@@ -8,6 +8,8 @@ services:
     depends_on:
       mysql:
         condition: service_started
+    environment:
+      - MYSQL_HOST=mysql
     working_dir: /workspace
     volumes:
       - .:/workspace:cached

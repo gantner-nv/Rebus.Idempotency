@@ -38,8 +38,9 @@ namespace Rebus.Idempotency.MySql.Tests
 
         static string GetConnectionStringForDatabase(string databaseName)
         {
+            var server = Environment.GetEnvironmentVariable("MYSQL_HOST") ?? "localhost";
             return Environment.GetEnvironmentVariable("REBUS_MYSQL")
-                ?? $"server=localhost; database={databaseName}; user id=mysql; password=mysql;maximum pool size=30;";
+                ?? $"server={server}; database={databaseName}; user id=mysql; password=mysql;maximum pool size=30;";
         }
     }
 }

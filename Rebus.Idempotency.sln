@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution files", "Solution 
 		.travis.yml = .travis.yml
 		Directory.Build.props = Directory.Build.props
 		docker-compose.yml = docker-compose.yml
+		global.json = global.json
 	EndProjectSection
 EndProject
 Global

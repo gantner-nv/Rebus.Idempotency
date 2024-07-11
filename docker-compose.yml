@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile_inline: |
         FROM mcr.microsoft.com/dotnet/sdk:8.0
-    command: dotnet test --configuration Release
+    command: dotnet test -c Release
     depends_on:
       mysql:
         condition: service_started

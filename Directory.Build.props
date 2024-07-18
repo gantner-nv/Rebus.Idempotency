@@ -3,6 +3,6 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>9</LangVersion>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <VersionSuffix>beta001</VersionSuffix>
+        <VersionSuffix>beta002</VersionSuffix>
     </PropertyGroup>
 </Project>

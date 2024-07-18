@@ -1,23 +1,23 @@
 ﻿using System;
-using MySqlData = MySql.Data;
+using MySqlConnector;
 
 
 namespace Rebus.Idempotency.MySql
 {
     /// <summary>
-    /// Wraps an opened <see cref="MySqlData.MySqlClient.MySqlConnection"/> and makes it easier to work with it
+    /// Wraps an opened <see cref="MySqlConnector.MySqlConnection"/> and makes it easier to work with it
     /// </summary>
     public class MySqlConnection : IDisposable
     {
-        readonly MySqlData.MySqlClient.MySqlConnection _currentConnection;
-        MySqlData.MySqlClient.MySqlTransaction _currentTransaction;
+        readonly MySqlConnector.MySqlConnection _currentConnection;
+        MySqlTransaction _currentTransaction;
 
         bool _disposed;
 
         /// <summary>
         /// Constructs the wrapper with the given connection and transaction
         /// </summary>
-        public MySqlConnection(MySqlData.MySqlClient.MySqlConnection currentConnection, MySqlData.MySqlClient.MySqlTransaction currentTransaction)
+        public MySqlConnection(MySqlConnector.MySqlConnection currentConnection, MySqlTransaction currentTransaction)
         {
             _currentConnection = currentConnection ?? throw new ArgumentNullException(nameof(currentConnection));
             _currentTransaction = currentTransaction ?? throw new ArgumentNullException(nameof(currentTransaction));
@@ -26,7 +26,7 @@ namespace Rebus.Idempotency.MySql
         /// <summary>
         /// Creates a new command, enlisting it in the current transaction
         /// </summary>
-        public MySqlData.MySqlClient.MySqlCommand CreateCommand()
+        public MySqlCommand CreateCommand()
         {
             var command = _currentConnection.CreateCommand();
             command.Transaction = _currentTransaction;

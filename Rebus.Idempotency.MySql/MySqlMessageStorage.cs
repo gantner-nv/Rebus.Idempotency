@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
+using MySqlConnector;
 using Rebus.Logging;
 using Rebus.Idempotency.MySql.Extensions;
 
@@ -61,7 +61,7 @@ namespace Rebus.Idempotency.MySql
                             msgData.IdempotencyData = idempotencyData;
                         }
                     }
-                    catch (SqlException sqlException) when (sqlException.Number == OperationCancelledNumber)
+                    catch (MySqlException sqlException) when (sqlException.Number == OperationCancelledNumber)
                     {
                         // ADO.NET does not throw the right exception when the task gets cancelled - therefore we need to do this:
                         throw new TaskCanceledException("Receive operation was cancelled", sqlException);
@@ -96,7 +96,7 @@ namespace Rebus.Idempotency.MySql
                         if (processingThreadId is DBNull) return false;
                         return processingThreadId != null;
                     }
-                    catch (SqlException sqlException) when (sqlException.Number == OperationCancelledNumber)
+                    catch (MySqlException sqlException) when (sqlException.Number == OperationCancelledNumber)
                     {
                         // ADO.NET does not throw the right exception when the task gets cancelled - therefore we need to do this:
                         throw new TaskCanceledException("Receive operation was cancelled", sqlException);

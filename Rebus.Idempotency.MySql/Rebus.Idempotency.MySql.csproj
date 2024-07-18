@@ -25,7 +25,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Rebus.MySql" Version="2.2.*" />
+        <PackageReference Include="Rebus.MySql" Version="4.0.*" />
     </ItemGroup>
 
     <ItemGroup>

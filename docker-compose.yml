@@ -1,21 +1,4 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile_inline: |
-        FROM mcr.microsoft.com/dotnet/sdk:8.0
-    command: dotnet test -c Release
-    depends_on:
-      mysql:
-        condition: service_started
-    environment:
-      - MYSQL_HOST=mysql
-    working_dir: /workspace
-    volumes:
-      - .:/workspace:cached
-    networks:
-      - fiber
-
   mysql:
     image: mysql:8.0.37
     environment:
@@ -25,8 +8,3 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
       - 3306:3306
-    networks:
-      - fiber
-
-networks:
-  fiber:

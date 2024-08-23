@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using System.Threading.Tasks;
-using MySqlData = MySql.Data;
 
 namespace Rebus.Idempotency.MySql
 {
@@ -18,7 +17,7 @@ namespace Rebus.Idempotency.MySql
         /// </summary>
         public async Task<MySqlConnection> GetConnection()
         {
-            var connection = new MySqlData.MySqlClient.MySqlConnection(_connectionString);
+            var connection = new MySqlConnector.MySqlConnection(_connectionString);
 
             await connection.OpenAsync();
 

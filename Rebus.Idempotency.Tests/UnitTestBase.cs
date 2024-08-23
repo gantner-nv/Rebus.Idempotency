@@ -10,7 +10,6 @@ namespace Rebus.Idempotency.Tests
 
         public UnitTestBase()
         {
-            RebusTimeMachine.Reset();
             _disposables.Clear();
         }
 

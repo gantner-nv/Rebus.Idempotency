@@ -14,7 +14,6 @@ namespace Rebus.Idempotency.MySql
         private readonly MySqlConnectionHelper _connectionHelper;
         private readonly string _dataTableName;
         private readonly ILog _log;
-        private readonly IdempotencyDataSerializer _serializer;
         private bool _disposed;
 
         public MySqlMessageStorage(MySqlConnectionHelper connectionHelper, string dataTableName,
@@ -24,7 +23,6 @@ namespace Rebus.Idempotency.MySql
             _connectionHelper = connectionHelper ?? throw new ArgumentNullException(nameof(connectionHelper));
             _dataTableName = dataTableName ?? throw new ArgumentNullException(nameof(dataTableName));
             _log = rebusLoggerFactory.GetLogger<MySqlMessageStorage>();
-            _serializer = new IdempotencyDataSerializer();
         }
 
         public async Task<MessageData> Find(MessageId messageId)
@@ -54,7 +52,7 @@ namespace Rebus.Idempotency.MySql
                             var inputQueueAddress = (string)reader.ExtractValue("input_queue_address");
                             var processingThreadId = (int?)reader.ExtractValue("processing_thread_id");
                             var timeThreadIdAssigned = (DateTime?)reader.ExtractValue("time_thread_id_assigned");
-                            var idempotencyData = _serializer.DeserializeData((string)(reader.ExtractValue("data")));
+                            var idempotencyData = IdempotencyDataSerializer.DeserializeData((string)(reader.ExtractValue("data")));
 
                             msgData = MessageDataFactory.BuildMessageData(msgId, deferCount, inputQueueAddress,
                                 processingThreadId, timeThreadIdAssigned);
@@ -143,7 +141,7 @@ namespace Rebus.Idempotency.MySql
                     command.Parameters.Add(command.CreateParameter("time_thread_id_assigned", DbType.DateTime,
                         messageData.TimeThreadIdAssigned));
                     command.Parameters.Add(command.CreateParameter("data", DbType.String,
-                         _serializer.SerializeData(messageData.IdempotencyData)));
+                        IdempotencyDataSerializer.SerializeData(messageData.IdempotencyData)));
                     await command.ExecuteNonQueryAsync();
                 }
 

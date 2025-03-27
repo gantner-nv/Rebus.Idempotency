@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Rebus.Messages;
@@ -10,8 +11,8 @@ namespace Rebus.Idempotency
     /// </summary>
     public class IdempotencyData
     {
-        readonly List<OutgoingMessages> _outgoingMessages = new();
-        readonly ConcurrentDictionary<string, bool> _handledMessageIds = new();
+        private List<OutgoingMessages> _outgoingMessages = new();
+        private ConcurrentDictionary<string, bool> _handledMessageIds = new();
 
         /// <summary>
         /// Gets the outgoing messages
@@ -80,6 +81,18 @@ namespace Rebus.Idempotency
             _outgoingMessages.Add(outgoingMessages);
 
             return outgoingMessages;
+        }
+
+        [Obsolete("added for fallback support only, will be removed after prod update")]
+        public void SetOutgoingMessage(List<OutgoingMessages> outgoingMessages)
+        {
+            _outgoingMessages = outgoingMessages;
+        }
+        
+        [Obsolete("added for fallback support only, will be removed after prod update")]
+        public void SetHandledMessageIds(ConcurrentDictionary<string, bool> handledMessageIds)
+        {
+            _handledMessageIds = handledMessageIds;
         }
     }
 }

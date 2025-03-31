@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using Rebus.Messages;
 
@@ -9,8 +11,8 @@ namespace Rebus.Idempotency
     /// </summary>
     public class IdempotencyData
     {
-        readonly List<OutgoingMessages> _outgoingMessages = new List<OutgoingMessages>();
-        readonly HashSet<string> _handledMessageIds = new HashSet<string>();
+        private List<OutgoingMessages> _outgoingMessages = new();
+        private ConcurrentDictionary<string, bool> _handledMessageIds = new();
 
         /// <summary>
         /// Gets the outgoing messages
@@ -23,7 +25,7 @@ namespace Rebus.Idempotency
         /// <summary>
         /// Getst the IDs of all messages that have been handled
         /// </summary>
-        public HashSet<string> HandledMessageIds
+        public ConcurrentDictionary<string, bool> HandledMessageIds
         {
             get { return _handledMessageIds; }
         }
@@ -33,7 +35,7 @@ namespace Rebus.Idempotency
         /// </summary>
         public bool HasAlreadyHandled(MessageId messageId)
         {
-            return _handledMessageIds.Contains(messageId);
+            return _handledMessageIds.ContainsKey(messageId);
         }
 
         /// <summary>
@@ -53,7 +55,7 @@ namespace Rebus.Idempotency
         /// </summary>
         public void MarkMessageAsHandled(MessageId messageId)
         {
-            _handledMessageIds.Add(messageId);
+            _handledMessageIds.TryAdd(messageId, true);
         }
 
         /// <summary>
@@ -69,7 +71,7 @@ namespace Rebus.Idempotency
 
         OutgoingMessages GetOrCreate(MessageId messageId)
         {
-            _handledMessageIds.Add(messageId);
+            _handledMessageIds.TryAdd(messageId, true);
 
             var outgoingMessages = _outgoingMessages.FirstOrDefault(o => o.MessageId == messageId);
 
@@ -79,6 +81,18 @@ namespace Rebus.Idempotency
             _outgoingMessages.Add(outgoingMessages);
 
             return outgoingMessages;
+        }
+
+        [Obsolete("added for fallback support only, will be removed after prod update")]
+        public void SetOutgoingMessage(List<OutgoingMessages> outgoingMessages)
+        {
+            _outgoingMessages = outgoingMessages;
+        }
+        
+        [Obsolete("added for fallback support only, will be removed after prod update")]
+        public void SetHandledMessageIds(ConcurrentDictionary<string, bool> handledMessageIds)
+        {
+            _handledMessageIds = handledMessageIds;
         }
     }
 }

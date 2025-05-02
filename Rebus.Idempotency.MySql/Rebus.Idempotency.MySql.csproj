@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <VersionPrefix>2.2.1</VersionPrefix>
+        <VersionPrefix>2.2.2</VersionPrefix>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
 

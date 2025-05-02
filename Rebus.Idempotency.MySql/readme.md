@@ -2,7 +2,7 @@
 
 ## Version 2.2.2
 
-* Removed obsoleted stuffs from previous version 2.2.1
+* Removed fallback for deserialization to HashSet for older messages
 
 ## Version 2.2.1
 

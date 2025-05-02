@@ -2,7 +2,7 @@
 
 ## Version 2.3.2
 
-* Removed obsoleted stuffs from previous version 2.3.1
+* Obsoleted the use of a HashSet in the IdempotencyData
 
 ## Version 2.3.1
 
